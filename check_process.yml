@@ -1,0 +1,11 @@
+--- 
+- name: checking is process in runining 
+  hosts: node1
+  tasks:
+   
+  - name: Checking if any process is running on specified jdk
+    shell: "ps -ef | grep java"
+    register: check_process_java
+  
+  - debug:
+     msg: "{{ check_process_java }}"

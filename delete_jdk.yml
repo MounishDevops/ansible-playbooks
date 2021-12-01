@@ -1,0 +1,20 @@
+---
+- name: delete "{{ jdkname }}"
+  hosts: node1
+  tasks:
+  - name: Find JDK folders
+    find:
+      paths: "{{ jdkdir }}"
+      patterns: "{{ jdkname }}"
+      file_type: directory
+      recurse: yes
+    register: jdk_folders_to_delete
+  
+  - debug:
+      msg: "{{ jdk_folders_to_delete }}"
+
+  - name: Remove unneeded JDK folders
+    file:
+      dest: "{{ item.path }}"
+      state: absent
+    loop: "{{ jdk_folders_to_delete.files }}"

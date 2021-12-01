@@ -1,0 +1,10 @@
+---
+- name: ssh-copy-id using ansible authorized_key module
+  hosts: test
+  gather_facts: False
+  tasks:
+    
+    - name: Deploy SSH Key
+      authorized_key: user=root
+                     key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+                     state=present 
